@@ -1,0 +1,31 @@
+<nav>
+    <div class="row">
+        <div class="col-sm-2 left-nav">
+            <a href="{{ path('home') }}"><img src="{{ asset('img/sortir_com-logo3.png') }}" alt="logo" height="70px"></a>
+        </div>
+        
+        <div class="col-sm-10 right-nav">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a class="fake-link-nav" href="#">Hello {{ app.user.username }} !</a>
+            {% endif %}
+            <a class="link-nav" href="{{ path('home') }}">Accueil</a>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="link-nav" href="{{ path('sortie_list') }}">Sorties</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="link-nav" href="{{ path('cities') }}">Villes</a>
+                <a class="link-nav" href="{{ path('campus') }}">Campus</a>
+            {% endif %}
+    
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="link-nav" href="{{ path('user_profile',{'id': app.user.id}) }}">Mon profil</a>
+                <a class="link-nav" href="{{ path('logout') }}">Se déconnecter</a>
+            {% else %}
+                <a class="link-nav" href="{{ path('login') }}">Se connecter</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <a class="link-nav" href="{{ path('register') }}">Nouveau participant</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

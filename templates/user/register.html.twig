@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Register {% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center">
+        {% form_theme registerForm 'bootstrap_4_layout.html.twig' %}
+        {{ form_start(registerForm) }}
+        <h1>Créer un compte</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                {{ form_row(registerForm.name) }}
+                {{ form_row(registerForm.firstName) }}
+                {{ form_row(registerForm.email) }}
+                {{ form_row(registerForm.phoneNumber) }}
+                {{ form_row(registerForm.active) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(registerForm.username) }}
+                {{ form_row(registerForm.password) }}
+                {{ form_row(registerForm.campus) }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-md btn-primary">Valider</button>
+        {{ form_end(registerForm) }}
+    </div>
+{% endblock %}

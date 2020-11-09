@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Modifier mon profil {% endblock %}
+
+{% block main %}
+    
+    <div class="d-flex justify-content-center">
+        {% form_theme updateForm 'bootstrap_4_layout.html.twig' %}
+        {{ form_start(updateForm) }}
+        <h1>Modifier mon profil</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                {{ form_row(updateForm.name) }}
+                {{ form_row(updateForm.firstName) }}
+                {{ form_row(updateForm.email) }}
+                {{ form_row(updateForm.phoneNumber) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(updateForm.username) }}
+                {{ form_row(updateForm.password) }}
+                {{ form_row(updateForm.campus) }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-md btn-primary">Enregistrer</button>
+        <a href="{{ path('user_profile',{'id': app.user.id}) }}">
+            <button type="button" class="btn btn-md btn-secondary">Annuler</button>
+        </a>
+        {{ form_end(updateForm) }}
+    </div>
+    
+{% endblock %}

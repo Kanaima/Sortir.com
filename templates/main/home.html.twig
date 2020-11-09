@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Home {% endblock %}
+
+{% block main %}
+    <div class="jumbotron">
+        <h1>Bienvenue!</h1>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('sortie_list') }}">Voir les sorties du moment</a>
+        {% endif %}
+    </div>
+    
+{% endblock %}
+
+

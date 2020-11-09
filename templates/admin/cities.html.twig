@@ -1,0 +1,78 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Villes {% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center">
+        <form method="post" action="{{ path('cities') }}">
+            <h1>Gestion des villes</h1>
+            <table class="text-center table-col">
+                <thead>
+                <tr>
+                    <th class="table-thead table-col table-col1"><h6>Ville</h6></th>
+                    <th class="table-thead table-col table-col2"><h6>Code postal</h6></th>
+                    <th class="table-thead table-col table-col3"><h6>Actions</h6></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ville in villes %}
+                <tr>
+                    <td class="table-col table-col1">
+                        <input type="text" class="form-control" name="_nom" id="nom{{ ville.id }}" disabled value="{{ ville.nom }}">
+                    </td>
+                    <td class="table-col table-col2">
+                        <input type="text" class="form-control" name="_cp" id="cp{{ ville.id }}" disabled value="{{
+                        ville.codePostal }}">
+                    </td>
+                    <td class="table-col table-col3">
+                        <div id="links{{ ville.id }}">
+                            <a href="#" id="update{{ ville.id }}"
+                               onclick="//elements to show and enable
+                                       $('#nom{{ ville.id }}').prop('disabled', false);
+                                       $('#cp{{ ville.id }}').prop('disabled', false);
+                                       $('#buttons{{ ville.id }}').show();
+            
+                                       //elements to hide and disable
+                                       $('#nom').prop('disabled', true);
+                                       $('#cp').prop('disabled', true);
+                                       $('#newBtn').prop('disabled', true);
+                                       $('#links{{ ville.id }}').hide();">Modifier</a> |
+                            <a href="{{ path('city_delete', {'id': ville.id}) }}" id="delete{{ ville.id
+                            }}">Supprimer</a>
+                        </div>
+                        <div id="buttons{{ ville.id }}" style="display: none">
+                            <input id="save{{ ville.id }}" type="submit" class="btn btn-md btn-link" value="Enregistrer"  onclick="this.form.action='{{ path('city_update',
+                                {'id': ville.id}) }}'"> |
+                            <input id="cancel{{ ville.id }}" type="button" class="btn btn-md btn-link" value="Annuler"
+                                   onclick="//elements to show and enable
+                                           $('#nom').prop('disabled', false);
+                                           $('#cp').prop('disabled', false);
+                                           $('#newBtn').prop('disabled', false);
+                                           $('#links{{ ville.id }}').show();
+            
+                                           //elements to hide and disable
+                                           $('#nom{{ ville.id }}').prop('disabled', true);
+                                           $('#cp{{ ville.id }}').prop('disabled', true);
+                                           $('#buttons{{ ville.id }}').hide();">
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="table-col table-col1">
+                        <input type="text" class="form-control" name="_nom" id="nom" placeholder="Nom" required>
+                    </td>
+                    <td class="table-col table-col2">
+                        <input type="text" class="form-control" name="_cp" id="cp" placeholder="XXXXX" required>
+                    </td>
+                    <td class="table-col table-col3">
+                        <input type="submit" class="btn btn-md btn-block btn-link" id="newBtn" value="Ajouter">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}
+
+

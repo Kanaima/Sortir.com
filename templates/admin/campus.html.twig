@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Campus {% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center">
+        <form method="post" action="{{ path('campus') }}">
+            <h1>Gestion des campus</h1>
+            <table class="text-center table-col">
+                <thead>
+                <tr>
+                    <th class="table-thead table-col table-col1"><h6>Campus</h6></th>
+                    <th class="table-thead table-col table-col1"><h6>Actions</h6></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for campus in campusS %}
+                <tr>
+                    <td class="table-col table-col1">
+                        <input type="text" class="form-control" name="nom{{ campus.id }}" id="nom{{ campus.id }}" disabled value="{{ campus.nom }}">
+                        
+                    </td>
+                    <td class="table-col table-col1">
+                        <div id="links{{ campus.id }}">
+                            <a href="#" id="update{{ campus.id }}"
+                               onclick="//elements to show and enable
+                                       $('#nom{{ campus.id }}').prop('disabled', false);
+                                       $('#buttons{{ campus.id }}').show();
+            
+                                       //elements to hide and disable
+                                       $('#nom').prop('disabled', true);
+                                       $('#nomBtn').prop('disabled', true);
+                                       $('#links{{ campus.id }}').hide();">Modifier</a> |
+                            <a href="{{ path('campus_delete',{'id': campus.id}) }}" id="delete{{ campus.id }}">Supprimer</a>
+                        </div>
+                        
+                        <div id="buttons{{ campus.id }}" style="display: none">
+                            <input id="save{{ campus.id }}" type="submit" class="btn btn-md   btn-link" value="Enregistrer"
+                                   onclick="this.form.action='{{ path('campus_update',{'id': campus.id}) }}'"> |
+                            <input id="cancel{{ campus.id }}" type="button" class="btn btn-md btn-link" value="Annuler"
+                                   onclick="//elements to show and enable
+                                           $('#nom').prop('disabled', false);
+                                           $('#nomBtn').prop('disabled', false);
+                                           $('#links{{ campus.id }}').show();
+            
+                                           //elements to hide and disable
+                                           $('#nom{{ campus.id }}').prop('disabled', true);
+                                           $('#buttons{{ campus.id }}').hide();">
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="table-col table-col1">
+                        <input type="text" class="form-control" name="_nom" id="nom" placeholder="Nom" required>
+                    </td>
+                    <td class="table-col table-col1">
+                        <input id="nomBtn" type="submit" class="btn btn-md btn-block btn-link" value="Ajouter">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    
+{% endblock %}
+

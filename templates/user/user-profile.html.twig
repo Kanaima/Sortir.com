@@ -1,0 +1,78 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Mon profil {% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center">
+        <form class="form-login form-group">
+            <h1>Mon profil</h1>
+            <!-- Username -->
+            <div class="row input-disabled">
+                <label for="username" class="col-sm-4 pr-1">Pseudo :</label>
+                <input type="text" class="col-sm-8 input-off" name="_username" id="username" value="{{ user.username }}" readonly>
+            </div>
+            
+            <!-- Firstname -->
+            <div class="row input-disabled">
+                <label for="firstName" class="col-sm-4 pr-1">Prénom :</label>
+                <input type="text" class="col-sm-8 input-off" name="_firstName" id="firstName" value="{{ user.firstName }}" readonly>
+            </div>
+            
+            <!-- Name -->
+            <div class="row input-disabled">
+                <label for="name" class="col-sm-4 pr-1">Nom :</label>
+                <input type="text" class="col-sm-8 input-off" name="_name" id="name" value="{{ user.name }}" readonly>
+            </div>
+            
+            <!-- PhoneNumber -->
+            <div class="row input-disabled">
+                <label for="phoneNumber" class="col-sm-4 pr-1">Téléphone :</label>
+                <input type="tel" class="col-sm-8 input-off" name="_phoneNumber" id="phoneNumber" value="{{ user.phoneNumber }}"
+                       readonly>
+            </div>
+            
+            <!-- Email -->
+            <div class="row input-disabled">
+                <label for="email" class="col-sm-4 pr-1">Email :</label>
+                <input type="email" class="col-sm-8 input-off" name="_email" id="email" value="{{ user.email }}"
+                       readonly>
+            </div>
+            
+            <!-- Campus -->
+            <div class="row input-disabled">
+                <label for="campus" class="col-sm-4 pr-1">Campus :</label>
+                <input type="text" class="col-sm-8 input-off" name="_campus" id="campus" value="{{ user.campus.nom }}"
+                       readonly>
+            </div>
+    
+            <!-- Buttons -->
+            <div class="row d-flex justify-content-center mt-3">
+                <!-- Update -->
+                {% if user.id == app.user.id or is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('user_update', {'id': user.id}) }}">
+                        <button class="btn btn-lg btn-primary m-1" type="button">Modifier</button>
+                    </a>
+                {% endif %}
+    
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% if user.active == true %}
+                        <!-- Deactivate -->
+                        <a href="{{ path('user_deactivation', {'id': user.id}) }}">
+                            <button class="btn btn-lg btn-secondary m-1" type="button" onclick="return confirm('Voulez-vous vraiment désactiver ce compte?')">Désactiver</button>
+                        </a>
+                    {% else %}
+                        <!-- Activate -->
+                        <a href="{{ path('user_activation', {'id': user.id}) }}">
+                            <button class="btn btn-lg btn-secondary m-1" type="button" onclick="return confirm('Voulez-vous vraiment réactiver ce compte?')">Réactiver</button>
+                        </a>
+                    {% endif %}
+        
+                    <!-- Delete -->
+                    <a href="{{ path('user_delete', {'id': user.id}) }}">
+                        <button class="btn btn-lg btn-danger m-1" type="button" onclick="return confirm('Voulez-vous vraiment supprimer ce compte?')">Supprimer</button>
+                    </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

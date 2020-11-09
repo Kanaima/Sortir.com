@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Login {% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center text-center">
+        <form method="post">
+            <h1>Connecte-toi</h1>
+                <!-- Username -->
+                <div class="form-group">
+                    <input type="text" class="form-control" name="_username" id="username" placeholder="Pseudo"
+                           required autofocus>
+                </div>
+                
+                <!-- Password -->
+                <div class="form-group">
+                    <input type="password" class="form-control" name="_password" id="password" placeholder="Mot de passe"
+                           required>
+                </div>
+                
+                <!-- Remember me -->
+                <div class="form-group">
+                    <label class="checkbox mb-3">
+                        <input type="checkbox" value="remember-me" name="_remember_me">
+                        Se souvenir de moi
+                    </label>
+                </div>
+                
+                <!-- Submit button -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-md btn-primary btn-block">Se connecter</button>
+                </div>
+                
+                <!-- Register link / forgot password -->
+                <div class="form-group">
+                    <p>Pas encore inscrit(e)?
+                        <a href="{{ path('register') }}"> Inscris-toi ici!</a>
+                    </p>
+                    
+                    <a href="#">Mot de passe oublié?</a>
+                </div>
+        </form>
+    </div>
+{% endblock %}

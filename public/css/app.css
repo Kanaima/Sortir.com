@@ -1,0 +1,232 @@
+html, body{
+    height: 100%;
+    overflow-x: hidden;
+}
+
+
+body{
+    background-color: grey;
+}
+
+
+/* NAVBAR */
+nav{
+    background-color: goldenrod;
+}
+
+
+.left-nav{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.left-nav>a>img:hover{
+    animation: shake 0.4s infinite;
+}
+
+
+.right-nav{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.link-nav:link, .link-nav:visited{
+    color: white;
+    text-decoration: none;
+    margin-right: 1em;
+}
+
+.link-nav:hover, .link-nav:active{
+    color: white;
+    text-shadow: 1px 1px black;
+    margin-right: 1em;
+    animation: shake 0.2s 1;
+}
+
+
+.fake-link-nav:link, .fake-link-nav:visited, .fake-link-nav:hover, .fake-link-nav:active{
+    color: white;
+    font-weight: bolder;
+    text-decoration: none;
+    margin-right: 1em;
+    cursor: default;
+}
+/* END NAVBAR */
+
+
+
+main{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    height: fit-content;
+    width: 90%;
+    margin: 4em auto;
+}
+
+.box-shadow-set{
+    width: fit-content;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px gray, 0px 4px 8px gray;
+}
+
+.box-shadow-none{
+    box-shadow: unset;
+}
+
+
+
+/* FORMS */
+form{
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px gray, 0px 4px 8px gray;
+    justify-content: center;
+    align-content: center;
+    padding: 2em;
+}
+
+form>h1{
+    text-align: center;
+    padding-bottom: 0.5em;
+}
+
+
+.form-login{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    height: 70%;
+    max-width: 400px;
+    margin: auto;
+}
+
+.form-filter{
+    display: inline-block;
+    width: fit-content;
+}
+
+
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 5em;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    max-width: 500px;
+    margin: auto;
+}
+
+.spanClose{
+    color: #AAAAAA;
+    float: right;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.spanClose:hover, .spanClose:focus{
+    color: black;
+    cursor: pointer;
+}
+
+.input-disabled{
+    border: unset;
+    margin: 4px;
+    text-align: left;
+}
+
+.input-disabled>input{
+    border: unset;
+    border-radius: 5px;
+    background-color: #dedede;
+}
+
+textarea:disabled{
+    color: black;
+    border: none;
+    background: none;
+}
+
+.btn-custom{
+    margin-top: 1em;
+}
+/* END FORMS */
+
+
+
+/* TABLES */
+.custom-table{
+    border-style: inset;
+    border-width: thin;
+    border-collapse: collapse;
+    border-color: black;
+    box-shadow: 0px 4px 8px gray, 0px 4px 8px gray;
+    border-left: inset thin grey;
+    padding: 1em;
+}
+
+.table-thead{
+    font-weight: bolder;
+    background-color: #cbcbcb;
+}
+
+.table-col{
+    border: inset thin grey;
+    padding: 0.25em;
+    justify-content: center;
+    align-content: center;
+    line-height: normal;
+}
+
+.table-col1, .table-col2{
+    width: 30%;
+}
+
+.table-col3{
+    width: 40%;
+}
+/* END TABLES */
+
+
+
+/* FOOTER */
+footer{
+    background-color: #4c4c4c;
+    color: white;
+    text-align: center;
+    font-size: x-small;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1em;
+    height: fit-content;
+}
+
+
+/* ANIMATIONS */
+@keyframes shake {
+    0% {transform: rotate(2deg);}
+    25% {transform: rotate(-2deg);}
+    50% {transform: rotate(2deg);}
+    75% {transform: rotate(-2deg);}
+    100% {transform: rotate(2deg);}
+}
+
+

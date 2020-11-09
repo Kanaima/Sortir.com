@@ -1,0 +1,95 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Afficher une sortie {% endblock %}
+
+{% block main %}
+    <div class="box-shadow-set justify-self-center mx-auto px-3 py-3">
+        <div class="d-flex justify-content-center my-3">
+            <h1>Sortie n°{{ sortie.id }}</h1>
+        </div>
+    
+        <div class="d-flex justify-content-center my-3">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="px-2 py-1">Nom de la sortie :</td>
+                    <td class="px-2 py-1 font-weight-bold">{{ sortie.nom }}</td>
+                    <td class="px-4 py-1"> </td>
+                    <td class="px-2 py-1">Campus :</td>
+                    <td class="px-2 py-1">{{ sortie.campus.nom }}</td>
+                </tr>
+            
+                <tr>
+                    <td class="px-2 py-1">Date et heure de la sortie :</td>
+                    <td class="px-2 py-1">{{ sortie.dateHeureDebut| date('d/m/Y H:i') }}</td>
+                    <td class="px-4 py-1"> </td>
+                    <td class="px-2 py-1">Lieu :</td>
+                    <td class="px-2 py-1">{{ sortie.lieu.nom }}</td>
+                </tr>
+            
+                <tr>
+                    <td class="px-2 py-1">Date limite d'inscription :</td>
+                    <td class="px-2 py-1">{{ sortie.dateLimiteInscription| date('d/m/Y H:i') }}</td>
+                    <td class="px-4 py-1"> </td>
+                    <td class="px-2 py-1">Rue :</td>
+                    <td class="px-2 py-1">{{ sortie.lieu.rue }}</td>
+                </tr>
+            
+                <tr>
+                    <td class="px-2 py-1">Nombre de places :</td>
+                    <td class="px-2 py-1">{{ sortie.nbInscriptionMax }}</td>
+                    <td class="px-4 py-1"> </td>
+                    <td class="px-2 py-1">Code Postal :</td>
+                    <td class="px-2 py-1">{{ sortie.lieu.ville.codePostal }}</td>
+                </tr>
+            
+                <tr>
+                    <td class="px-2 py-1">Durée :</td>
+                    <td class="px-2 py-1">{{ sortie.duree }} min.</td>
+                    <td class="px-4 py-1"> </td>
+                    <td class="px-2 py-1">Latitude :</td>
+                    <td class="px-2 py-1">{{ sortie.lieu.latitude }}</td>
+                </tr>
+            
+                <tr class="align-top">
+                    <td class="px-2 py-1">Description et infos :</td>
+                    <td class="px-2 py-1" >
+                        <textarea class="textarea-disabled" rows="3" cols="25" disabled>{{ sortie.infosSortie }}</textarea>
+                    </td>
+                    <td class="px-4 py-1"> </td>
+                    <td class="px-2 py-1">Longitude :</td>
+                    <td class="px-2 py-1">{{ sortie.lieu.longitude }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center my-3">
+            <a href="{{ path('sortie_update', {'id': sortie.id}) }}" role="button" class="btn btn-lg btn-primary
+">Modifier</a>
+        </div>
+    </div>
+    
+    <div class="row my-3">
+        <h4>Liste de participants inscrits :</h4>
+    </div>
+    <div class="row">
+        <table class="text-center custom-table">
+            <thead>
+            <tr class="table-thead">
+                <th class="table-thead table-col p-2">Pseudo</th>
+                <th class="table-thead table-col p-2">Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for participant in participants %}
+                <tr>
+                    <td class="table-col p-2">{{ participant.username }}</td>
+                    <td class="table-col p-2">{{ participant.name }} {{ participant.firstName }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,141 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} | Liste sorties {% endblock %}
+
+{% block main %}
+    <div class="d-flex flex-column align-items-end">
+        <p><strong>Date du jour : {{ "now" | date('d/m/Y') }}</strong></p>
+        <p><strong>Participant : {{ app.user.firstName }} {{ app.user.name | first }}.</strong></p>
+    </div>
+    
+    <div class="d-flex justify-content-start my-3">
+        <form method="post" class="box-shadow-none form-filter row">
+            <!-- Column filters -->
+            <div class="form-group col-sm-9">
+                <h3>Filtrer les sorties</h3>
+                
+                <!-- 1rst line (Campus) -->
+                <div class="row">
+                    <label for="campus" class="col-sm-3">Campus :</label>
+                    <select name="_campus" id="campus" class="form-control col-sm-4">
+                        {% for campus in campusS %}
+                            <option value="{{ campus.nom }}">{{ campus.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- 2nd line (search, date...) -->
+                <div class="row">
+                    <!-- 1rst half column -->
+                    <div class="col-sm-6">
+                        <!-- Search keyword input inline -->
+                        <div class="form-inline">
+                            <label for="search" class="">Le nom de la sortie contient :</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-pretend">
+                                    <span class="input-group-text">Search</span>
+                                </div>
+                                <input type="search" id="search" class="form-control">
+                            </div>
+                        </div>
+                    
+                        <!-- Date inputs inline -->
+                        <div class="d-inline">
+                            <label for="">Entre :</label>
+                            <input type="date" class="form-control">
+    
+                            <label for="">et :</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!-- 2nd half column -->
+                    <div class="form-group col-sm-6">
+                        <!-- checkboxes blocks -->
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="check-organizer">
+                            <label for="check-organizer" class="form-check-label">Sorties dont je suis l'organisateur/trice</label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="check-signed">
+                            <label for="check-signed" class="form-check-label">Sorties auxquelles je suis inscrit/e</label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="check-not-signed">
+                            <label for="check-not-signed" class="form-check-label">Sorties auxquelles je nesuis pas insrit/e</label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="check-passed">
+                            <label for="check-passed" class="form-check-label">Sorties passées</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column search button -->
+            <div class="form-group col-sm-3">
+                <button type="submit" class="btn btn-lg btn-secondary">Rechercher</button>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center my-3">
+        <table class="text-center custom-table">
+            <thead>
+            <tr class="table-thead">
+                <th class="table-thead table-col"><h6>Nom de la sortie</h6></th>
+                <th class="table-thead table-col"><h6>Date de la sortie</h6></th>
+                <th class="table-thead table-col"><h6>Clôture des inscriptions</h6></th>
+                <th class="table-thead table-col"><h6>Inscrits/places</h6></th>
+                <th class="table-thead table-col"><h6>Etat</h6></th>
+                <th class="table-thead table-col"><h6>Inscrit</h6></th>
+                <th class="table-thead table-col"><h6>Organisateur</h6></th>
+                <th class="table-thead table-col"><h6>Actions</h6></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                {% if date(sortie.dateHeureDebut, '+30days') < date('now') %}
+                    <tr>
+                        <td class="table-col">{{ sortie.nom }}</td>
+                        <td class="table-col">{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                        <td class="table-col">{{ sortie.dateLimiteInscription | date('d/m/Y H:i') }}</td>
+                        <td class="table-col"> {{ sortie.participants.count }} / {{ sortie.nbInscriptionMax }}</td>
+                        <td class="table-col">{{ sortie.etat.libelle }}</td>
+                        <td class="table-col">
+                            {% if isRegistered %}
+                                <span>&#x2714</span>
+                            {% endif %}
+                        </td>
+                        <td class="table-col">
+                            <a href="{{ path('user_profile', {'id': sortie.organisateur.id }) }}">{{ sortie.organisateur.firstName }} {{ sortie.organisateur.name |
+                                first }}.</a>
+                        </td>
+                        <td class="table-col">
+                            <a href="{{ path('sortie_detail',{'id': sortie.id}) }}">Afficher</a> |
+                            {% if (sortie.organisateur.id == app.user.id or is_granted('ROLE_ADMIN')) %}
+                                <a href="{{ path('sortie_update',{'id': sortie.id}) }}">Modifier</a> |
+                                <a href="{{ path('sortie_cancel',{'id': sortie.id}) }}">Annuler</a> |
+                            {% endif %}
+                            <a href="{{ path('sortie_registration', {'id': sortie.id}) }}">S'inscrire</a> |
+                            <a href="{{ path('sortie_withdraw', {'id': sortie.id}) }}">Se désister</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center my-5">
+        <a href="{{ path('sortie_add') }}">
+            <button class="btn btn-lg btn-primary">
+                Créer une sortie
+            </button>
+        </a>
+    </div>
+
+{% endblock %}
+
+
